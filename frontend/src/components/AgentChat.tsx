@@ -74,8 +74,8 @@ export function AgentChat() {
   return (
     <div className="chat-container">
       <header className="chat-header">
-        <div className="chat-header-icon">✦</div>
-        <div>
+        <div className="chat-header-icon">🤖</div>
+        <div className="chat-header-text">
           <h1>Strands Agent</h1>
           <p>Powered by Gemini 2.5 Flash</p>
         </div>
@@ -88,14 +88,15 @@ export function AgentChat() {
       <div className="chat-messages">
         {messages.length === 0 && (
           <div className="chat-empty">
-            <div className="chat-empty-icon">✦</div>
+            <div className="chat-empty-icon">🤖</div>
+            <h2>Strands Agent</h2>
             <p>Ask me anything to get started.</p>
           </div>
         )}
 
         {messages.map((msg, i) => (
-          <div key={i} className={`chat-bubble ${msg.role}`}>
-            <span className="chat-bubble-label">{msg.role === 'user' ? 'You' : 'Agent'}</span>
+          <div key={i} className={`chat-row ${msg.role}`}>
+            <div className="chat-avatar">{msg.role === 'user' ? '👤' : '🤖'}</div>
             <p className="chat-bubble-text">
               {msg.parts.map((part, j) =>
                 part.kind === 'tool' ? (
@@ -112,7 +113,7 @@ export function AgentChat() {
       </div>
 
       <form className="chat-form" onSubmit={handleSubmit}>
-        <div className="chat-input-wrap">
+        <div className="chat-input-bar">
           <input
             className="chat-input"
             type="text"
@@ -122,15 +123,15 @@ export function AgentChat() {
             disabled={isLoading}
             autoFocus
           />
+          <button
+            className="chat-submit"
+            type="submit"
+            disabled={isLoading || !input.trim()}
+            aria-label="Send message"
+          >
+            {isLoading ? '…' : '↑'}
+          </button>
         </div>
-        <button
-          className="chat-submit"
-          type="submit"
-          disabled={isLoading || !input.trim()}
-          aria-label="Send message"
-        >
-          {isLoading ? '…' : '↑'}
-        </button>
       </form>
     </div>
   )
