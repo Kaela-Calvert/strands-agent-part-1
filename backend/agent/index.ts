@@ -1,6 +1,7 @@
 import { Agent } from '@strands-agents/sdk'
 import { GoogleModel } from '@strands-agents/sdk/models/google'
 import { config } from '../config/index.js'
+import { ragTool } from '../tools/ragtool.js'
 
 const model = new GoogleModel({
   apiKey: config.geminiApiKey,
@@ -13,4 +14,4 @@ const model = new GoogleModel({
   },
 })
 
-export const agent = new Agent({ model })
+export const agent = new Agent({ model, tools: [ragTool] })
