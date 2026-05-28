@@ -1,20 +1,26 @@
 # Strands Agent
 
-A streaming AI chat interface powered by [Strands Agents SDK](https://github.com/strands-agents/sdk) and Gemini 2.5 Flash.
+A streaming AI chat interface powered by [Strands Agents SDK](https://github.com/strands-agents/sdk) and Gemini 2.5 Flash, with RAG support via ChromaDB.
 
 ## Stack
 
 - **Frontend** — React + TypeScript + Vite
 - **Backend** — Node.js + Express
 - **AI** — Strands Agents SDK with Google Gemini 2.5 Flash
+- **RAG** — ChromaDB + Gemini embeddings (`gemini-embedding-001`)
 
 ## Project Structure
 
 ```
 ├── backend/
-│   ├── agent/        # Agent instantiation
+│   ├── agent/        # Agent instantiation + RAG tool registration
 │   ├── config/       # Environment config & model params
-│   └── routes/       # Express route handlers (SSE streaming)
+│   ├── routes/       # Express route handlers (SSE streaming)
+│   └── tools/        # RAG tool (queries ChromaDB)
+├── chroma/           # Local ChromaDB persistent store
+├── chroma-collection.ts  # ChromaDB client + Gemini embedding function
+├── ingest.ts         # PDF ingestion script
+├── ragdocs/          # Source documents for RAG
 ├── src/
 │   ├── api/          # Frontend fetch layer
 │   ├── components/   # React components (AgentChat)
@@ -43,32 +49,31 @@ Create a `.env` file in the project root:
 GEMINI_API_KEY=your_api_key_here
 ```
 
-### 3. Start the backend
+### 3. Ingest documents (first time only)
 
-The backend runs on `http://localhost:3001` and handles all agent communication.
+Place PDFs in the `ragdocs/` folder, then run:
+
+```bash
+npx tsx --env-file=.env ingest.ts
+```
+
+This chunks the PDF and stores embeddings in ChromaDB locally.
+
+### 4. Start the backend
 
 ```bash
 npm run server
 ```
 
-You should see:
-```
-Agent server running on http://localhost:3001
-```
+### 5. Start the frontend
 
-### 4. Start the frontend
-
-In a **separate terminal**, start the Vite dev server:
+In a **separate terminal**:
 
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### 5. Use the app
-
-Type a question in the input and press Enter or click the send button. The agent's response streams back in real time.
 
 ---
 
