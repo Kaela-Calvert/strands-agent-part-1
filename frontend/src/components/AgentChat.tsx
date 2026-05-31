@@ -74,10 +74,10 @@ export function AgentChat() {
   return (
     <div className="chat-container">
       <header className="chat-header">
-        <div className="chat-header-icon">🤖</div>
+        <div className="chat-header-icon">🩺</div>
         <div className="chat-header-text">
-          <h1>Strands Agent</h1>
-          <p>Powered by Gemini 2.5 Flash</p>
+          <h1>Medical Assistant</h1>
+          <p>Gynaecology Knowledge Base · Powered by Gemini 2.5 Flash</p>
         </div>
         <div className="chat-header-status">
           <span className="status-dot" />
@@ -88,22 +88,20 @@ export function AgentChat() {
       <div className="chat-messages">
         {messages.length === 0 && (
           <div className="chat-empty">
-            <div className="chat-empty-icon">🤖</div>
-            <h2>Strands Agent</h2>
-            <p>Ask me anything to get started.</p>
+            <div className="chat-empty-icon">🩺</div>
+            <h2>Medical Assistant</h2>
+            <p>Ask a gynaecology question to get started.</p>
           </div>
         )}
 
         {messages.map((msg, i) => (
           <div key={i} className={`chat-row ${msg.role}`}>
-            <div className="chat-avatar">{msg.role === 'user' ? '👤' : '🤖'}</div>
+            <div className="chat-avatar">{msg.role === 'user' ? '👤' : '🩺'}</div>
             <p className="chat-bubble-text">
               {msg.parts.map((part, j) =>
-                part.kind === 'tool' ? (
-                  <span key={j} className="tool-pill">⚙ {part.name}</span>
-                ) : (
+                part.kind === 'text' ? (
                   <span key={j}>{part.content}</span>
-                )
+                ) : null
               )}
               {msg.isStreaming && msg.parts.length === 0 && <span className="cursor" />}
             </p>
@@ -119,7 +117,7 @@ export function AgentChat() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask the agent something…"
+            placeholder="Ask a medical question…"
             disabled={isLoading}
             autoFocus
           />
