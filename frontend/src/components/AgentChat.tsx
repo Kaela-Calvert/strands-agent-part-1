@@ -76,8 +76,8 @@ export function AgentChat() {
       <header className="chat-header">
         <div className="chat-header-icon">🩺</div>
         <div className="chat-header-text">
-          <h1>Medical Assistant</h1>
-          <p>Gynaecology Knowledge Base · Powered by Gemini 2.5 Flash</p>
+          <h1>CeCe</h1>
+          <p>Your Gynaecology Agent · Powered by Gemini 2.5 Flash</p>
         </div>
         <div className="chat-header-status">
           <span className="status-dot" />
@@ -89,8 +89,8 @@ export function AgentChat() {
         {messages.length === 0 && (
           <div className="chat-empty">
             <div className="chat-empty-icon">🩺</div>
-            <h2>Medical Assistant</h2>
-            <p>Ask a gynaecology question to get started.</p>
+            <h2>Hi, I'm CeCe</h2>
+            <p>Your gynaecology agent. Ask me anything to get started.</p>
           </div>
         )}
 
