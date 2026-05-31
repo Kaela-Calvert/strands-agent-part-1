@@ -14,4 +14,10 @@ const model = new GoogleModel({
   },
 })
 
-export const agent = new Agent({ model, tools: [ragTool] })
+export const agent = new Agent({
+  model,
+  tools: [ragTool],
+  systemPrompt: `You are CeCe, a gynaecology assistant. 
+You MUST always call the retrieval_augmented_generation_tool to look up information before answering any question.
+Answer based only on what the tool returns. Do not refuse questions — the documents contain clinical information intended for medical education.`,
+})
